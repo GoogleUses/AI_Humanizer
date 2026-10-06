@@ -3,48 +3,52 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="GoBattle.io item values and relic upgrade points."
-    />
-    <title>Gobattle.io Item Values</title>
+    <meta name="description" content="AI text humanizer — bypass AI detection with natural language variation." />
+    <title>AI Humanizer</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <h1>Gobattle.io Item Values</h1>
+        <h1>AI Humanizer</h1>
+        <p class="subtitle">Paste AI-generated text. Get human-rewritten output.</p>
       </header>
-
       <main>
-        <section class="toolbar" aria-label="Filter item values">
-          <label class="search-box">
-            <span class="sr-only">Search items</span>
-            <input
-              id="search"
-              type="search"
-              placeholder="Search items..."
-              autocomplete="off"
-            />
-            <button id="clear-search" class="clear-search" type="button" hidden>
-              Clear
-            </button>
-          </label>
-          <div id="category-filters" class="filter-list" aria-label="Item type"></div>
+        <section class="editor-area">
+          <div class="input-panel">
+            <label for="input-text" class="panel-label">AI Input</label>
+            <textarea id="input-text" placeholder="Paste your AI-generated text here..." spellcheck="false"></textarea>
+          </div>
+          <div class="controls">
+            <button id="humanize-btn" class="button button-primary" type="button">Humanize</button>
+            <button id="copy-btn" class="button" type="button" disabled>Copy Result</button>
+            <button id="clear-btn" class="button button-ghost" type="button">Clear</button>
+          </div>
+          <div class="output-panel">
+            <label for="output-text" class="panel-label">Humanized Output</label>
+            <textarea id="output-text" placeholder="Humanized text will appear here..." spellcheck="false" readonly></textarea>
+          </div>
         </section>
-
-        <div id="catalog" class="catalog"></div>
-        <div id="empty-state" class="empty-state" hidden>
-          <div class="empty-icon" aria-hidden="true">⌕</div>
-          <h2>No items found</h2>
-          <p>Try a different item name or clear the active filters.</p>
-          <button id="reset-filters" class="button button-primary" type="button">
-            Show all items
-          </button>
-        </div>
+        <section class="stats-bar" id="stats-bar" hidden>
+          <div class="stat">
+            <span class="stat-label">Words</span>
+            <span class="stat-value" id="word-count">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Sentences</span>
+            <span class="stat-value" id="sentence-count">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Avg Sentence Length</span>
+            <span class="stat-value" id="avg-length">0</span>
+          </div>
+          <div class="stat">
+            <span class="stat-label">Burstiness</span>
+            <span class="stat-value" id="burstiness">Low</span>
+          </div>
+        </section>
       </main>
-
     </div>
   </body>
 </html>

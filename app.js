@@ -1,597 +1,286 @@
-const ultraItems = [
-  {
-    name: "Rose Garden Ring",
-    value: "10,000+",
-    sortValue: 10000,
-    image: "rose-ring.png",
-    note: "Spring Event Exclusive",
+const Humanizer = {
+  synonymMap: {
+    "important": ["critical", "essential", "vital", "crucial", "significant", "key", "pivotal"],
+    "however": ["though", "yet", "still", "nevertheless", "despite this", "that said", "even so"],
+    "therefore": ["so", "thus", "as a result", "consequently", "which means", "because of that"],
+    "additionally": ["also", "plus", "on top of that", "furthermore", "moreover", "beyond that"],
+    "because": ["since", "given that", "due to the fact that", "as", "considering"],
+    "many": ["numerous", "several", "countless", "various", "plenty of", "a ton of"],
+    "show": ["demonstrate", "reveal", "indicate", "display", "illustrate", "make clear"],
+    "use": ["utilize", "employ", "leverage", "apply", "harness", "rely on"],
+    "make": ["create", "produce", "generate", "form", "construct", "build"],
+    "good": ["solid", "strong", "effective", "valuable", "worthwhile", "decent"],
+    "bad": ["poor", "flawed", "weak", "subpar", "inadequate", "lacking"],
+    "big": ["large", "substantial", "significant", "considerable", "massive", "sizable"],
+    "small": ["minor", "slight", "modest", "minimal", "negligible", "marginal"],
+    "help": ["assist", "support", "aid", "facilitate", "enable", "back up"],
+    "change": ["shift", "alter", "modify", "adjust", "transform", "reshape"],
+    "problem": ["issue", "challenge", "obstacle", "difficulty", "hurdle", "stumbling block"],
+    "need": ["require", "demand", "necessitate", "call for", "hinge on"],
+    "think": ["believe", "consider", "reckon", "suppose", "assume", "figure"],
+    "understand": ["grasp", "comprehend", "recognize", "realize", "see", "parse"],
+    "way": ["method", "approach", "manner", "strategy", "technique", "angle"],
+    "find": ["discover", "identify", "uncover", "locate", "determine", "pin down"],
+    "different": ["distinct", "varied", "diverse", "contrasting", "separate", "unlike"],
+    "often": ["frequently", "regularly", "commonly", "routinely", "repeatedly", "time and again"],
+    "start": ["begin", "initiate", "launch", "kick off", "set in motion", "get going"],
+    "end": ["conclude", "finish", "wrap up", "complete", "bring to a close", "round out"],
+    "look": ["examine", "inspect", "review", "analyze", "scrutinize", "take a look at"],
+    "seem": ["appear", "feel", "come across as", "strike me as", "sound like"],
+    "part": ["component", "element", "aspect", "segment", "piece", "slice"],
+    "point": ["idea", "argument", "notion", "concept", "position", "takeaway"],
+    "case": ["situation", "scenario", "instance", "context", "circumstance", "set of conditions"],
+    "really": ["genuinely", "truly", "honestly", "literally", "actually", "straight up"],
+    "very": ["incredibly", "remarkably", "notably", "particularly", "especially", "exceptionally"],
+    "more": ["additional", "extra", "further", "added", "supplementary"],
+    "most": ["a majority of", "nearly all", "the bulk of", "primarily", "largely"],
+    "some": ["a few", "several", "certain", "a handful of", "various"],
+    "also": ["additionally", "on top of that", "what's more", "as well", "to boot"],
+    "but": ["yet", "though", "still", "even so", "that said", "having said that"],
+    "like": ["similar to", "akin to", "reminiscent of", "along the lines of"],
+    "about": ["regarding", "concerning", "around", "roughly", "approximately"],
+    "thing": ["matter", "issue", "factor", "element", "detail", "aspect"],
+    "people": ["individuals", "folks", "persons", "those", "everyone", "most"],
+    "want": ["desire", "seek", "aim for", "hope for", "could use", "are after"],
+    "try": ["attempt", "aim", "strive", "endeavor", "take a shot at", "go for"],
+    "get": ["obtain", "acquire", "secure", "pick up", "land", "come away with"],
+    "give": ["provide", "offer", "supply", "hand over", "deliver", "extend"],
+    "keep": ["maintain", "retain", "preserve", "hold onto", "sustain", "stick with"],
+    "let": ["allow", "permit", "enable", "open the door to", "make way for"],
+    "work": ["function", "operate", "perform", "do the job", "get results", "pan out"],
+    "ask": ["inquire", "question", "request", "probe", "find out", "look into"],
+    "every": ["each", "every single", "all", "every last"],
+    "few": ["a couple of", "a handful of", "scarcely any", "not many", "a sparse set of"],
+    "high": ["elevated", "tall", "considerable", "steep", "peak", "upper-tier"],
+    "low": ["reduced", "minimal", "modest", "bottom-tier", "slim", "depressed"],
+    "new": ["recent", "fresh", "latest", "novel", "current", "up-to-date"],
+    "old": ["previous", "former", "past", "aging", "long-standing", "veteran"],
+    "first": ["initial", "opening", "lead-off", "primary", "earliest"],
+    "last": ["final", "closing", "ultimate", "most recent", "trailing"],
+    "long": ["extended", "lengthy", "drawn-out", "prolonged", "far-reaching"],
+    "short": ["brief", "compact", "concise", "abbreviated", "truncated"],
+    "easy": ["simple", "straightforward", "effortless", "uncomplicated", "accessible"],
+    "hard": ["difficult", "challenging", "tough", "demanding", "rigorous"],
+    "fast": ["quick", "rapid", "swift", "brisk", "accelerated"],
+    "slow": ["gradual", "sluggish", "unhurried", "measured", "leisurely"],
+    "happy": ["pleased", "content", "satisfied", "glad", "delighted"],
+    "sad": ["unhappy", "down", "disheartened", "melancholic", "low"],
+    "right": ["correct", "accurate", "proper", "fitting", "appropriate"],
+    "wrong": ["incorrect", "mistaken", "flawed", "off base", "inaccurate"],
+    "interesting": ["compelling", "intriguing", "fascinating", "notable", "worth looking at"],
+    "clear": ["obvious", "evident", "apparent", "plain", "unmistakable"],
+    "complex": ["intricate", "elaborate", "multi-layered", "sophisticated", "nuanced"],
+    "simple": ["basic", "straightforward", "uncomplicated", "no-frills", "bare-bones"],
+    "common": ["widespread", "prevalent", "typical", "standard", "routine"],
+    "rare": ["uncommon", "scarce", "infrequent", "unusual", "hard to find"],
+    "strong": ["powerful", "robust", "potent", "formidable", "solid"],
+    "weak": ["feeble", "fragile", "flimsy", "inadequate", "lacking"],
   },
-  {
-    name: "GoBattle Ring",
-    value: "8,600+",
-    sortValue: 8600,
-    image: "gobattle-ring.png",
-    note: "Promo version · 1 of 1 · Priceless",
+  starters: [
+    "Look,", "Here's the thing —", "Honestly,", "To be fair,", "At the end of the day,",
+    "What's interesting is that", "The reality is", "When you get down to it,",
+    "It's worth noting that", "Arguably,", "From what I can tell,", "If you think about it,",
+    "Now,", "That said,", "In practice,", "From a practical standpoint,",
+    "The way I see it,", "What it comes down to is", "And honestly,",
+    "The truth is", "If we're being real,", "Here's where it gets tricky —",
+    "What stands out is that", "The bottom line is", "For what it's worth,",
+    "Digging into it,", "Looking closer,", "At first glance,", "Step back and you'll see",
+  ],
+  contractions: {
+    "do not": "don't", "does not": "doesn't", "did not": "didn't",
+    "is not": "isn't", "are not": "aren't", "was not": "wasn't",
+    "were not": "weren't", "has not": "hasn't", "have not": "haven't",
+    "had not": "hadn't", "will not": "won't", "would not": "wouldn't",
+    "could not": "couldn't", "should not": "shouldn't", "cannot": "can't",
+    "can not": "can't", "it is": "it's", "they are": "they're",
+    "we are": "we're", "you are": "you're", "I am": "I'm",
+    "that is": "that's", "there is": "there's", "what is": "what's",
+    "who is": "who's", "how is": "how's", "let us": "let's",
+    "I will": "I'll", "you will": "you'll", "they will": "they'll",
+    "we will": "we'll", "I would": "I'd", "you would": "you'd",
+    "they would": "they'd", "we would": "we'd", "I have": "I've",
+    "you have": "you've", "they have": "they've", "we have": "we've",
+    "it has": "it's", "she is": "she's", "he is": "he's",
+    "she has": "she's", "he has": "he's", "that has": "that's",
+    "there has": "there's", "what has": "what's", "who has": "who's",
   },
-  {
-    name: "Blaze Throw",
-    value: "4,000",
-    sortValue: 4000,
-    image: "blazethrow.png",
-    note: "Summer Event Exclusive · Not usable in KM",
+  fillers: ["I mean,", "you know,", "well,", "right,", "look,", "honestly,"],
+  hedging: ["probably", "likely", "in most cases", "for the most part", "generally"],
+  _seed: null,
+  _state: null,
+  srand(seed) { this._seed = seed; this._state = seed; },
+  rand() {
+    if (this._state === null) return Math.random();
+    this._state ^= this._state << 13;
+    this._state ^= this._state >>> 17;
+    this._state ^= this._state << 5;
+    return ((this._state >>> 0) / 4294967296);
   },
-  {
-    name: "Team Gravity Feather",
-    value: "3,300",
-    sortValue: 3300,
-    image: "team-gravity-feather.png",
-  },
-  {
-    name: "Firebreath Ring",
-    value: "1,400",
-    sortValue: 1400,
-    image: "firebreath-ring.png",
-  },
-  {
-    name: "Restoration Ring",
-    value: "1,350",
-    sortValue: 1350,
-    image: "resto-ring.png",
-  },
-  {
-    name: "Peppermint Strike",
-    value: "1,100",
-    sortValue: 1100,
-    image: "peppermint.png",
-    note: "Winter Event Exclusive",
-  },
-  {
-    name: "Breath Helmet",
-    value: "850",
-    sortValue: 850,
-    image: "breathhelmet.webp",
-  },
-  {
-    name: "Gravity Feather",
-    value: "850",
-    sortValue: 850,
-    image: "gravity-feather.png",
-  },
-  {
-    name: "Instant Strength Glove",
-    value: "600",
-    sortValue: 600,
-    image: "orange-glove.png",
-  },
-  {
-    name: "Bloodmoon Ring",
-    value: "400",
-    sortValue: 400,
-    image: "bloodmoon-ring.png",
-    note: "Halloween Event Exclusive",
-  },
-  {
-    name: "Lava Armor",
-    value: "350",
-    sortValue: 350,
-    image: "lavaarmour.png",
-  },
-  {
-    name: "Epic Strength Glove",
-    value: "295",
-    sortValue: 295,
-    image: "epic-glove.png",
-  },
-  {
-    name: "Maximum Speed Boots",
-    value: "199",
-    sortValue: 199,
-    image: "maximum-speed-boots.png",
-  },
-  {
-    name: "Maximum Fire Cloak",
-    value: "190",
-    sortValue: 190,
-    image: "max-fire.png",
-  },
-  {
-    name: "Fire Protection Cloak",
-    value: "100",
-    sortValue: 100,
-    image: "fire-protection-cloak.png",
-  },
-  {
-    name: "Extreme Venom Cloak Protection",
-    value: "90",
-    sortValue: 90,
-    image: "ex-venom.png",
-  },
-  {
-    name: "Blue Dragon Ring",
-    value: "25–85",
-    sortValue: 85,
-    image: "blue-ring.png",
-  },
-  {
-    name: "Anti Freezing Glove",
-    value: "250",
-    sortValue: 250,
-    image: "blue-glove.png",
-  },
-  {
-    name: "Red Dragon Ring",
-    value: "13",
-    sortValue: 13,
-    image: "red-ring.png",
-  },
-  {
-    name: "Firebreath Blood",
-    value: "12",
-    sortValue: 12,
-    image: "firebreaths-blood.png",
-  },
-  {
-    name: "Normal Health Regeneration Cloak",
-    value: "12",
-    sortValue: 12,
-    image: "health-regeneration-cloak.png",
-  },
-  {
-    name: "Maximum Health Regeneration Cloak",
-    value: "8",
-    sortValue: 8,
-    image: "max-regen.png",
-  },
-  {
-    name: "Anti Fire Enchantment",
-    value: "7",
-    sortValue: 7,
-    image: "firebook.png",
-  },
-  {
-    name: "Speed Boots",
-    value: "4",
-    sortValue: 4,
-    image: "speed-boot.png",
-  },
-  {
-    name: "Epic Instant Defense Cloak",
-    value: "1–2",
-    sortValue: 2,
-    image: "epic-def.png",
-  },
-  {
-    name: "Venom Cloak",
-    value: "1–2",
-    sortValue: 2,
-    image: "normal-venom-protection-cloak.png",
-  },
-  {
-    name: "Regular Defense Cloak",
-    value: "1",
-    sortValue: 1,
-    image: "instant-defense-cloak.png",
-  },
-  {
-    name: "Normal Invisibility",
-    value: "1",
-    sortValue: 1,
-    image: "invisibility-cloak.png",
-  },
-  {
-    name: "Hermes Boots",
-    value: "1",
-    sortValue: 1,
-    image: "hermes.png",
-  },
-  {
-    name: "Extreme Invisibility Cloak",
-    value: "1",
-    sortValue: 1,
-    image: "ex-invis.png",
-  },
-  {
-    name: "Invincibility Potion",
-    value: "0.5",
-    sortValue: 0.5,
-    image: "epic-invincibility-potion.png",
-  },
-];
-
-const relics = [
-  {
-    name: "Gem Dust",
-    image: "gem-dust.png",
-    sortValue: 60000,
-    levels: [
-      { level: 1, effect: "Up to 5", points: "3,000+" },
-      { level: 2, effect: "Up to 10", points: "6,500+" },
-      { level: 3, effect: "Up to 30", points: "13,800+" },
-      { level: 4, effect: "Up to 50", points: "29,000+" },
-      { level: 5, effect: "Up to 100", points: "60,000+" },
-    ],
-  },
-  {
-    name: "Wizard's Focus",
-    sortValue: 33000,
-    levels: [
-      { level: 1, effect: "2%", points: "1,500+" },
-      { level: 2, effect: "4%", points: "3,500+" },
-      { level: 3, effect: "10%", points: "7,500+" },
-      { level: 4, effect: "30%", points: "16,000+" },
-      { level: 5, effect: "50%", points: "33,000+" },
-    ],
-  },
-  {
-    name: "Shado's Tear",
-    image: "shadotear.png",
-    note: "Halloween Event Exclusive",
-    sortValue: 21500,
-    levels: [
-      { level: 1, effect: "2%", points: "1,100" },
-      { level: 2, effect: "3%", points: "2,300" },
-      { level: 3, effect: "4%", points: "4,800" },
-      { level: 4, effect: "6%", points: "9,900" },
-      { level: 5, effect: "8%", points: "21,500" },
-    ],
-  },
-  {
-    name: "Prismatic Cloud",
-    image: "prismatic-cloud.png",
-    sortValue: 15000,
-    fixedValue: "14,000–15,000 pts",
-    note: "Estimated value if tradable",
-  },
-  {
-    name: "Flying Skill",
-    image: "flying-skill.png",
-    sortValue: 14000,
-    levels: [{ level: 1, effect: "Dash up with wings", points: "14,000" }],
-  },
-  {
-    name: "Dodge Charm",
-    sortValue: 12200,
-    levels: [
-      { level: 1, effect: "1%", points: "650" },
-      { level: 2, effect: "2%", points: "1,300" },
-      { level: 3, effect: "4%", points: "2,800" },
-      { level: 4, effect: "8%", points: "6,000" },
-      { level: 5, effect: "16%", points: "12,200" },
-    ],
-  },
-  {
-    name: "Shinobi's Fury",
-    image: "shinobi.png",
-    sortValue: 5200,
-    levels: [
-      { level: 1, effect: "8%", points: "250" },
-      { level: 2, effect: "16%", points: "550" },
-      { level: 3, effect: "30%", points: "1,200" },
-      { level: 4, effect: "60%", points: "2,500" },
-      { level: 5, effect: "80%", points: "5,200" },
-    ],
-  },
-  {
-    name: "Dwarf's Strength",
-    image: "dwarf-strength.png",
-    sortValue: 1500,
-    levels: [
-      { level: 1, effect: "8%", points: "50" },
-      { level: 2, effect: "16%", points: "110" },
-      { level: 3, effect: "30%", points: "300+" },
-      { level: 4, effect: "50%", points: "700+" },
-      { level: 5, effect: "80%", points: "1,500+" },
-    ],
-  },
-  {
-    name: "Iron Heart",
-    image: "iron-heart.png",
-    sortValue: 1100,
-    levels: [
-      { level: 1, effect: "2%", points: "12" },
-      { level: 2, effect: "4%", points: "60" },
-      { level: 3, effect: "10%", points: "190" },
-      { level: 4, effect: "20%", points: "500" },
-      { level: 5, effect: "40%", points: "1,100" },
-    ],
-  },
-  {
-    name: "Dice of Destiny",
-    image: "dice-of-destiny.png",
-    sortValue: 1000,
-    levels: [
-      { level: 1, effect: "1%", points: "10" },
-      { level: 2, effect: "2%", points: "50" },
-      { level: 3, effect: "10%", points: "150" },
-      { level: 4, effect: "20%", points: "450" },
-      { level: 5, effect: "50%", points: "1,000" },
-    ],
-  },
-  {
-    name: "The Rest Stone",
-    sortValue: 1000,
-    note: "Level 6 Adventurer Quest Reward",
-    levels: [
-      { level: 1, effect: "8%", points: "11" },
-      { level: 2, effect: "6%", points: "40" },
-      { level: 3, effect: "4%", points: "160" },
-      { level: 4, effect: "2%", points: "430" },
-      { level: 5, effect: "0%", points: "1,000" },
-    ],
-  },
-  {
-    name: "Talisman of the Phoenix",
-    image: "talisman-of-the-pheonix.png",
-    sortValue: 1000,
-    levels: [
-      { level: 1, effect: "2%", points: "30" },
-      { level: 2, effect: "5%", points: "80" },
-      { level: 3, effect: "10%", points: "200" },
-      { level: 4, effect: "20%", points: "450" },
-      { level: 5, effect: "30%", points: "1,000" },
-    ],
-  },
-  {
-    name: "Inferno Touch",
-    image: "inferno.png",
-    sortValue: 740,
-    note: "PVP only",
-    levels: [
-      { level: 1, effect: "1%", points: "6" },
-      { level: 2, effect: "2%", points: "40" },
-      { level: 3, effect: "5%", points: "130" },
-      { level: 4, effect: "10%", points: "350" },
-      { level: 5, effect: "15%", points: "740" },
-    ],
-  },
-  {
-    name: "Rejuvenation Gem",
-    image: "rejuv-gem.png",
-    sortValue: 620,
-    levels: [
-      { level: 1, effect: "2%", points: "5" },
-      { level: 2, effect: "5%", points: "35" },
-      { level: 3, effect: "10%", points: "125" },
-      { level: 4, effect: "20%", points: "300" },
-      { level: 5, effect: "40%", points: "620" },
-    ],
-  },
-  {
-    name: "Greed's Grip",
-    image: "greeds-grip.png",
-    sortValue: 100,
-    levels: [
-      { level: 1, effect: "2 blocks", points: "10" },
-      { level: 2, effect: "3 blocks", points: "20–40" },
-      { level: 3, effect: "5 blocks", points: "80–100" },
-    ],
-  },
-];
-
-const items = [
-  ...ultraItems.map((item) => ({ ...item, type: "items" })),
-  ...relics.map((item) => ({ ...item, type: "relics" })),
-];
-
-const catalog = document.querySelector("#catalog");
-const categoryFilters = document.querySelector("#category-filters");
-const searchInput = document.querySelector("#search");
-const clearSearchButton = document.querySelector("#clear-search");
-const emptyState = document.querySelector("#empty-state");
-const resetFiltersButton = document.querySelector("#reset-filters");
-
-let activeType = "all";
-let searchTerm = "";
-
-function escapeHtml(text) {
-  return String(text).replace(/[&<>"']/g, (character) =>
-    ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      '"': "&quot;",
-      "'": "&#039;",
-    })[character],
-  );
-}
-
-function normalized(text) {
-  return text
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase();
-}
-
-function imageOrInitials(item) {
-  if (item.image) {
-    return `
-      <img
-        class="item-image"
-        src="assets/items/${encodeURIComponent(item.image)}"
-        alt="${escapeHtml(item.name)}"
-        loading="lazy"
-      />
-    `;
-  }
-
-  const initials = item.name
-    .split(/\s+/)
-    .filter((word) => !["the", "of"].includes(word.toLowerCase()))
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-
-  return `<span class="image-fallback" aria-hidden="true">${escapeHtml(initials)}</span>`;
-}
-
-function itemCard(item) {
-  return `
-    <article class="item-card">
-      <div class="item-image-wrap">${imageOrInitials(item)}</div>
-      <div class="item-details">
-        <div class="item-topline">
-          <h3 class="item-name">${escapeHtml(item.name)}</h3>
-          <strong class="item-value">${escapeHtml(item.value)}</strong>
-        </div>
-        ${item.note ? `<p class="item-note">${escapeHtml(item.note)}</p>` : ""}
-      </div>
-    </article>
-  `;
-}
-
-function relicCard(relic) {
-  const levels = (relic.levels || [])
-    .map(
-      (level) => `
-        <div class="level-cell">
-          <span class="level-label">Lvl ${level.level}</span>
-          <span class="level-effect">${escapeHtml(level.effect)}</span>
-          <strong class="level-points">${escapeHtml(level.points)}</strong>
-          <span class="points-label">pts</span>
-        </div>
-      `,
-    )
-    .join("");
-
-  return `
-    <article class="relic-card">
-      <div class="relic-heading">
-        <div class="item-image-wrap relic-image-wrap">${imageOrInitials(relic)}</div>
-        <div class="relic-title">
-          <h3>${escapeHtml(relic.name)}</h3>
-          ${relic.note ? `<p class="item-note">${escapeHtml(relic.note)}</p>` : ""}
-          ${relic.fixedValue ? `<strong class="fixed-value">${escapeHtml(relic.fixedValue)}</strong>` : ""}
-        </div>
-      </div>
-      ${
-        relic.levels
-          ? `<div class="level-grid" aria-label="${escapeHtml(relic.name)} level values">${levels}</div>`
-          : ""
+  pick(arr) { return arr[Math.floor(this.rand() * arr.length)]; },
+  chance(p) { return this.rand() < p; },
+  humanize(text) {
+    if (!text || !text.trim()) return "";
+    let sentences = this.splitSentences(text);
+    let result = [];
+    for (let i = 0; i < sentences.length; i++) {
+      let s = sentences[i].trim();
+      if (!s) continue;
+      s = this.applyContractions(s);
+      s = this.swapSynonyms(s);
+      if (this.chance(0.35) && this.isValidOpener(s)) { s = this.addStarter(s); }
+      if (this.chance(0.10) && s.split(" ").length > 6) { s = this.injectFiller(s); }
+      if (this.chance(0.12)) { s = this.addHedge(s); }
+      if (s.split(" ").length <= 4 && i < sentences.length - 1) {
+        let next = sentences[i + 1] ? sentences[i + 1].trim() : "";
+        if (next) {
+          s = s.replace(/[.!?]+$/, "") + ", and " + next.charAt(0).toLowerCase() + next.slice(1);
+          i++;
+        }
       }
-    </article>
-  `;
-}
-
-function valueBand(value) {
-  if (value >= 10000) return "10,000+";
-  if (value >= 1000) return "1,000–9,999";
-  if (value >= 100) return "100–999";
-  if (value >= 10) return "10–99";
-  if (value >= 1) return "1–9";
-  return "Under 1";
-}
-
-function getFilteredItems() {
-  const query = normalized(searchTerm.trim());
-
-  return {
-    ultraItems: ultraItems
-      .filter((item) => activeType !== "relics")
-      .filter((item) => !query || normalized(`${item.name} ${item.note || ""}`).includes(query))
-      .slice()
-      .sort((a, b) => b.sortValue - a.sortValue || a.name.localeCompare(b.name)),
-    relics: relics
-      .filter((item) => activeType !== "items")
-      .filter((item) => !query || normalized(`${item.name} ${item.note || ""}`).includes(query))
-      .slice()
-      .sort((a, b) => b.sortValue - a.sortValue || a.name.localeCompare(b.name)),
-  };
-}
-
-function renderFilters() {
-  const options = [
-    { value: "all", label: "All" },
-    { value: "relics", label: "Relics" },
-    { value: "items", label: "Other items" },
-  ];
-
-  categoryFilters.innerHTML = options
-    .map(
-      (option) => `
-        <button
-          class="filter-button ${activeType === option.value ? "active" : ""}"
-          type="button"
-          data-type="${option.value}"
-          aria-pressed="${activeType === option.value}"
-        >${option.label}</button>
-      `,
-    )
-    .join("");
-
-  categoryFilters.querySelectorAll("[data-type]").forEach((button) => {
-    button.addEventListener("click", () => {
-      activeType = button.dataset.type;
-      render();
-    });
+      if (s.split(" ").length > 28 && s.includes(",")) {
+        let parts = this.splitLongSentence(s);
+        result.push(...parts);
+        continue;
+      }
+      result.push(s);
+    }
+    let joined = result.join(" ");
+    joined = this.cleanup(joined);
+    return joined;
+  },
+  splitSentences(text) {
+    let parts = text.match(/[^.!?]+[.!?]+|\S[^.!?]*$/g);
+    return parts ? parts.map(s => s.trim()).filter(s => s) : [text];
+  },
+  applyContractions(s) {
+    for (let [full, contracted] of Object.entries(this.contractions)) {
+      let regex = new RegExp("\\b" + full.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "\\b", "gi");
+      s = s.replace(regex, contracted);
+    }
+    return s;
+  },
+  swapSynonyms(s) {
+    let words = s.split(/(\s+)/);
+    for (let i = 0; i < words.length; i++) {
+      let clean = words[i].toLowerCase().replace(/[^a-z']/g, "");
+      if (this.synonymMap[clean] && this.chance(0.7)) {
+        let replacement = this.pick(this.synonymMap[clean]);
+        if (words[i][0] === words[i][0].toUpperCase()) {
+          replacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
+        }
+        let trailing = words[i].match(/[^a-zA-Z']+$/);
+        words[i] = replacement + (trailing ? trailing[0] : "");
+      }
+    }
+    return words.join("");
+  },
+  isValidOpener(s) {
+    let first = s.split(" ")[0].toLowerCase();
+    return !["look", "here's", "honestly", "the", "and", "but", "so", "well", "i", "you", "if"].includes(first.replace(/[^a-z']/g, ""));
+  },
+  addStarter(s) {
+    let starter = this.pick(this.starters);
+    let rest = s.charAt(0).toLowerCase() + s.slice(1);
+    return starter + " " + rest;
+  },
+  injectFiller(s) {
+    let words = s.split(" ");
+    if (words.length < 5) return s;
+    let pos = 3 + Math.floor(this.rand() * 3);
+    if (pos >= words.length) pos = Math.floor(words.length / 2);
+    let filler = this.pick(this.fillers);
+    words.splice(pos, 0, filler);
+    return words.join(" ");
+  },
+  addHedge(s) {
+    let hedge = this.pick(this.hedging);
+    let words = s.split(" ");
+    let modals = ["is", "are", "was", "were", "will", "would", "could", "should", "can", "has", "have", "had", "does", "do", "did"];
+    for (let i = 0; i < words.length; i++) {
+      if (modals.includes(words[i].toLowerCase().replace(/[^a-z]/g, ""))) {
+        words.splice(i + 1, 0, hedge);
+        return words.join(" ");
+      }
+    }
+    return s;
+  },
+  splitLongSentence(s) {
+    let commaIdxs = [];
+    for (let i = 0; i < s.length; i++) { if (s[i] === ",") commaIdxs.push(i); }
+    if (commaIdxs.length === 0) return [s];
+    let mid = s.length / 2;
+    let best = commaIdxs.reduce((a, b) => Math.abs(b - mid) < Math.abs(a - mid) ? b : a);
+    let first = s.substring(0, best).trim();
+    let second = s.substring(best + 1).trim();
+    if (!/[.!?]$/.test(first)) first += ".";
+    if (!/[.!?]$/.test(second)) second += ".";
+    second = second.charAt(0).toUpperCase() + second.slice(1);
+    return [first, second];
+  },
+  cleanup(s) {
+    s = s.replace(/\s{2,}/g, " ");
+    s = s.replace(/\s+([,.!?;:])/g, "$1");
+    s = s.replace(/([,.!?;:])([A-Za-z])/g, "$1 $2");
+    s = s.charAt(0).toUpperCase() + s.slice(1);
+    s = s.replace(/\b(\w+)\s+\1\b/gi, "$1");
+    if (!/[.!?]$/.test(s.trim())) s = s.trim() + ".";
+    return s.trim();
+  },
+  analyze(text) {
+    let words = text.trim().split(/\s+/).filter(w => w.length > 0);
+    let sentences = this.splitSentences(text);
+    let wordCount = words.length;
+    let sentenceCount = sentences.length;
+    let avgLen = sentenceCount > 0 ? Math.round(wordCount / sentenceCount) : 0;
+    let lengths = sentences.map(s => s.split(/\s+/).filter(w => w.length > 0).length);
+    let mean = lengths.reduce((a, b) => a + b, 0) / (lengths.length || 1);
+    let variance = lengths.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / (lengths.length || 1);
+    let stddev = Math.sqrt(variance);
+    let burstiness = "Low";
+    if (stddev > 6) burstiness = "High";
+    else if (stddev > 3) burstiness = "Medium";
+    return { wordCount, sentenceCount, avgLen, burstiness };
+  }
+};
+document.addEventListener("DOMContentLoaded", () => {
+  const inputEl = document.getElementById("input-text");
+  const outputEl = document.getElementById("output-text");
+  const humanizeBtn = document.getElementById("humanize-btn");
+  const copyBtn = document.getElementById("copy-btn");
+  const clearBtn = document.getElementById("clear-btn");
+  const statsBar = document.getElementById("stats-bar");
+  const wordCountEl = document.getElementById("word-count");
+  const sentenceCountEl = document.getElementById("sentence-count");
+  const avgLengthEl = document.getElementById("avg-length");
+  const burstinessEl = document.getElementById("burstiness");
+  humanizeBtn.addEventListener("click", () => {
+    let input = inputEl.value.trim();
+    if (!input) return;
+    Humanizer.srand(input.length * 7919);
+    let humanized = Humanizer.humanize(input);
+    outputEl.value = humanized;
+    let stats = Humanizer.analyze(humanized);
+    wordCountEl.textContent = stats.wordCount;
+    sentenceCountEl.textContent = stats.sentenceCount;
+    avgLengthEl.textContent = stats.avgLen;
+    burstinessEl.textContent = stats.burstiness;
+    statsBar.hidden = false;
+    copyBtn.disabled = false;
   });
-}
-
-function renderUltraItems(filteredItems) {
-  if (!filteredItems.length) return "";
-
-  const bands = [...new Set(filteredItems.map((item) => valueBand(item.sortValue)))];
-
-  return `
-    <section class="catalog-section" aria-labelledby="items-heading">
-      <div class="section-heading">
-        <h2 id="items-heading">Other Items</h2>
-      </div>
-      ${bands
-        .map((band) => {
-          const bandItems = filteredItems.filter((item) => valueBand(item.sortValue) === band);
-          return `
-            <div class="value-group">
-              <h3 class="value-band">${band}</h3>
-              <div class="item-grid">${bandItems.map(itemCard).join("")}</div>
-            </div>
-          `;
-        })
-        .join("")}
-    </section>
-  `;
-}
-
-function renderRelics(filteredRelics) {
-  if (!filteredRelics.length) return "";
-
-  return `
-    <section class="catalog-section relics-section" aria-labelledby="relics-heading">
-      <div class="section-heading">
-        <h2 id="relics-heading">Relics</h2>
-      </div>
-      <div class="relic-grid">${filteredRelics.map(relicCard).join("")}</div>
-    </section>
-  `;
-}
-
-function render() {
-  const filtered = getFilteredItems();
-  const total = filtered.ultraItems.length + filtered.relics.length;
-  clearSearchButton.hidden = !searchTerm;
-  catalog.innerHTML = `${renderRelics(filtered.relics)}${renderUltraItems(filtered.ultraItems)}`;
-  emptyState.hidden = total > 0;
-  catalog.hidden = total === 0;
-}
-
-searchInput.addEventListener("input", (event) => {
-  searchTerm = event.target.value;
-  render();
+  copyBtn.addEventListener("click", async () => {
+    if (!outputEl.value) return;
+    try {
+      await navigator.clipboard.writeText(outputEl.value);
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => { copyBtn.textContent = "Copy Result"; }, 2000);
+    } catch (e) {
+      outputEl.select();
+      document.execCommand("copy");
+      copyBtn.textContent = "Copied!";
+      setTimeout(() => { copyBtn.textContent = "Copy Result"; }, 2000);
+    }
+  });
+  clearBtn.addEventListener("click", () => {
+    inputEl.value = ""; outputEl.value = ""; statsBar.hidden = true; copyBtn.disabled = true; inputEl.focus();
+  });
 });
-
-clearSearchButton.addEventListener("click", () => {
-  searchInput.value = "";
-  searchTerm = "";
-  searchInput.focus();
-  render();
-});
-
-resetFiltersButton.addEventListener("click", () => {
-  activeType = "all";
-  searchInput.value = "";
-  searchTerm = "";
-  render();
-});
-
-renderFilters();
-render();
