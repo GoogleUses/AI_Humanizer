@@ -1,90 +1,171 @@
 const Humanizer = {
-  synonymMap: {
-    "important": ["critical", "essential", "vital", "crucial", "significant", "key", "pivotal"],
-    "however": ["though", "yet", "still", "nevertheless", "despite this", "that said", "even so"],
-    "therefore": ["so", "thus", "as a result", "consequently", "which means", "because of that"],
-    "additionally": ["also", "plus", "on top of that", "furthermore", "moreover", "beyond that"],
-    "because": ["since", "given that", "due to the fact that", "as", "considering"],
-    "many": ["numerous", "several", "countless", "various", "plenty of", "a ton of"],
-    "show": ["demonstrate", "reveal", "indicate", "display", "illustrate", "make clear"],
-    "use": ["utilize", "employ", "leverage", "apply", "harness", "rely on"],
-    "make": ["create", "produce", "generate", "form", "construct", "build"],
-    "good": ["solid", "strong", "effective", "valuable", "worthwhile", "decent"],
-    "bad": ["poor", "flawed", "weak", "subpar", "inadequate", "lacking"],
-    "big": ["large", "substantial", "significant", "considerable", "massive", "sizable"],
-    "small": ["minor", "slight", "modest", "minimal", "negligible", "marginal"],
-    "help": ["assist", "support", "aid", "facilitate", "enable", "back up"],
-    "change": ["shift", "alter", "modify", "adjust", "transform", "reshape"],
-    "problem": ["issue", "challenge", "obstacle", "difficulty", "hurdle", "stumbling block"],
-    "need": ["require", "demand", "necessitate", "call for", "hinge on"],
-    "think": ["believe", "consider", "reckon", "suppose", "assume", "figure"],
-    "understand": ["grasp", "comprehend", "recognize", "realize", "see", "parse"],
-    "way": ["method", "approach", "manner", "strategy", "technique", "angle"],
-    "find": ["discover", "identify", "uncover", "locate", "determine", "pin down"],
-    "different": ["distinct", "varied", "diverse", "contrasting", "separate", "unlike"],
-    "often": ["frequently", "regularly", "commonly", "routinely", "repeatedly", "time and again"],
-    "start": ["begin", "initiate", "launch", "kick off", "set in motion", "get going"],
-    "end": ["conclude", "finish", "wrap up", "complete", "bring to a close", "round out"],
-    "look": ["examine", "inspect", "review", "analyze", "scrutinize", "take a look at"],
-    "seem": ["appear", "feel", "come across as", "strike me as", "sound like"],
-    "part": ["component", "element", "aspect", "segment", "piece", "slice"],
-    "point": ["idea", "argument", "notion", "concept", "position", "takeaway"],
-    "case": ["situation", "scenario", "instance", "context", "circumstance", "set of conditions"],
-    "really": ["genuinely", "truly", "honestly", "literally", "actually", "straight up"],
-    "very": ["incredibly", "remarkably", "notably", "particularly", "especially", "exceptionally"],
-    "more": ["additional", "extra", "further", "added", "supplementary"],
-    "most": ["a majority of", "nearly all", "the bulk of", "primarily", "largely"],
-    "some": ["a few", "several", "certain", "a handful of", "various"],
-    "also": ["additionally", "on top of that", "what's more", "as well", "to boot"],
-    "but": ["yet", "though", "still", "even so", "that said", "having said that"],
-    "like": ["similar to", "akin to", "reminiscent of", "along the lines of"],
-    "about": ["regarding", "concerning", "around", "roughly", "approximately"],
-    "thing": ["matter", "issue", "factor", "element", "detail", "aspect"],
-    "people": ["individuals", "folks", "persons", "those", "everyone", "most"],
-    "want": ["desire", "seek", "aim for", "hope for", "could use", "are after"],
-    "try": ["attempt", "aim", "strive", "endeavor", "take a shot at", "go for"],
-    "get": ["obtain", "acquire", "secure", "pick up", "land", "come away with"],
-    "give": ["provide", "offer", "supply", "hand over", "deliver", "extend"],
-    "keep": ["maintain", "retain", "preserve", "hold onto", "sustain", "stick with"],
-    "let": ["allow", "permit", "enable", "open the door to", "make way for"],
-    "work": ["function", "operate", "perform", "do the job", "get results", "pan out"],
-    "ask": ["inquire", "question", "request", "probe", "find out", "look into"],
-    "every": ["each", "every single", "all", "every last"],
-    "few": ["a couple of", "a handful of", "scarcely any", "not many", "a sparse set of"],
-    "high": ["elevated", "tall", "considerable", "steep", "peak", "upper-tier"],
-    "low": ["reduced", "minimal", "modest", "bottom-tier", "slim", "depressed"],
-    "new": ["recent", "fresh", "latest", "novel", "current", "up-to-date"],
-    "old": ["previous", "former", "past", "aging", "long-standing", "veteran"],
-    "first": ["initial", "opening", "lead-off", "primary", "earliest"],
-    "last": ["final", "closing", "ultimate", "most recent", "trailing"],
-    "long": ["extended", "lengthy", "drawn-out", "prolonged", "far-reaching"],
-    "short": ["brief", "compact", "concise", "abbreviated", "truncated"],
-    "easy": ["simple", "straightforward", "effortless", "uncomplicated", "accessible"],
-    "hard": ["difficult", "challenging", "tough", "demanding", "rigorous"],
-    "fast": ["quick", "rapid", "swift", "brisk", "accelerated"],
-    "slow": ["gradual", "sluggish", "unhurried", "measured", "leisurely"],
-    "happy": ["pleased", "content", "satisfied", "glad", "delighted"],
-    "sad": ["unhappy", "down", "disheartened", "melancholic", "low"],
-    "right": ["correct", "accurate", "proper", "fitting", "appropriate"],
-    "wrong": ["incorrect", "mistaken", "flawed", "off base", "inaccurate"],
-    "interesting": ["compelling", "intriguing", "fascinating", "notable", "worth looking at"],
-    "clear": ["obvious", "evident", "apparent", "plain", "unmistakable"],
-    "complex": ["intricate", "elaborate", "multi-layered", "sophisticated", "nuanced"],
-    "simple": ["basic", "straightforward", "uncomplicated", "no-frills", "bare-bones"],
-    "common": ["widespread", "prevalent", "typical", "standard", "routine"],
-    "rare": ["uncommon", "scarce", "infrequent", "unusual", "hard to find"],
-    "strong": ["powerful", "robust", "potent", "formidable", "solid"],
-    "weak": ["feeble", "fragile", "flimsy", "inadequate", "lacking"],
+  aiTellWords: {
+    "furthermore": "on top of that",
+    "moreover": "plus",
+    "additionally": "also",
+    "consequently": "so",
+    "nevertheless": "still",
+    "nonetheless": "even so",
+    "hence": "which is why",
+    "thus": "so",
+    "therefore": "which means",
+    "it is worth noting": "worth mentioning",
+    "it is important to note": "key thing here",
+    "in conclusion": "all in all",
+    "in summary": "bottom line",
+    "in other words": "meaning",
+    "for instance": "say",
+    "for example": "like",
+    "in fact": "actually",
+    "indeed": "really",
+    "notably": "what stands out",
+    "significantly": "in a big way",
+    "substantially": "by a lot",
+    "essentially": "at its core",
+    "fundamentally": "basically",
+    "ultimately": "at the end of the day",
+    "comprehensive": "full",
+    "facilitate": "help with",
+    "utilize": "use",
+    "leverage": "tap into",
+    "demonstrate": "show",
+    "implement": "set up",
+    "incorporate": "bring in",
+    "optimize": "tune",
+    "enhance": "boost",
+    "endeavor": "try",
+    "ascertain": "figure out",
+    "commence": "start",
+    "terminate": "end",
+    "endeavour": "try",
+    "approximately": "roughly",
+    "sufficient": "enough",
+    "numerous": "a lot of",
+    "predominantly": "mostly",
+    "subsequently": "after that",
+    "prior to": "before",
+    "post": "after",
+    "pre": "before",
+    "via": "through",
+    "among": "across",
+    "whilst": "while",
+    "amongst": "across",
+    "amidst": "in the middle of",
+    "notwithstanding": "despite",
+    "therein": "in there",
+    "thereby": "which",
+    "wherein": "where",
+    "heretofore": "until now",
+    "hitherto": "so far",
   },
-  starters: [
-    "Look,", "Here's the thing —", "Honestly,", "To be fair,", "At the end of the day,",
-    "What's interesting is that", "The reality is", "When you get down to it,",
-    "It's worth noting that", "Arguably,", "From what I can tell,", "If you think about it,",
-    "Now,", "That said,", "In practice,", "From a practical standpoint,",
-    "The way I see it,", "What it comes down to is", "And honestly,",
-    "The truth is", "If we're being real,", "Here's where it gets tricky —",
-    "What stands out is that", "The bottom line is", "For what it's worth,",
-    "Digging into it,", "Looking closer,", "At first glance,", "Step back and you'll see",
+  humanSwaps: {
+    "good": ["solid", "legit", "decent", "not bad", "actually pretty good"],
+    "bad": ["rough", "shaky", "not great", "pretty rough", "subpar"],
+    "big": ["massive", "huge", "hefty", "oversized", "way too big"],
+    "small": ["tiny", "itty-bitty", "barely there", "compact", "puny"],
+    "important": ["key", "huge deal", "make-or-break", "critical", "the big one"],
+    "interesting": ["weirdly cool", "kinda fascinating", "worth a look", "oddly engaging"],
+    "difficult": ["tough", "rough going", "a pain", "not easy", "tricky"],
+    "easy": ["a breeze", "simple enough", "no sweat", "pretty painless"],
+    "fast": ["quick", "snappy", "before you know it", "in no time"],
+    "slow": ["sluggish", "dragging", "taking forever", "crawling"],
+    "happy": ["pretty stoked", "pleased", "content enough", "in a good spot"],
+    "sad": ["down", "bummed", "in a rough place", "not great"],
+    "smart": ["sharp", "bright", "quick on the uptake", "no slouch"],
+    "stupid": ["not the sharpest", "a bit dense", "slow on the uptake", "not winning any awards"],
+    "beautiful": ["stunning", "gorgeous", "easy on the eyes", "something else"],
+    "ugly": ["rough looking", "not pretty", "an eyesore", "hard to look at"],
+    "successful": ["worked out", "panned out", "hit the mark", "nailed it"],
+    "failed": ["fell apart", "didn't pan out", "went south", "tank"],
+    "started": ["kicked off", "got going", "set things in motion", "dove in"],
+    "ended": ["wrapped up", "came to a close", "finished out", "petered out"],
+    "created": ["whipped up", "put together", "came up with", "cobbled together"],
+    "destroyed": ["wiped out", "tore apart", "obliterated", "wrecked"],
+    "improved": ["got better", "shaped up", "turned around", "leveled up"],
+    "worsened": ["went downhill", "took a hit", "got worse", "slid"],
+    "increased": ["went up", "climbed", "shot up", "crept up"],
+    "decreased": ["dropped", "fell", "went down", "slid back"],
+    "showed": ["turned out", "came to light", "surfaced", "popped up"],
+    "found": ["turned up", "came across", "dug up", "stumbled onto"],
+    "thought": ["reckoned", "figured", "had a hunch", "was pretty sure"],
+    "knew": ["had a feeling", "was certain", "could tell", "picked up on"],
+    "said": ["mentioned", "pointed out", "noted", "brought up"],
+    "did": ["pulled off", "managed", "went ahead and", "ended up"],
+    "made": ["whipped up", "threw together", "managed", "pulled off"],
+    "went": ["headed", "made their way", "ended up", "drifted"],
+    "came": ["showed up", "rolled in", "turned up", "popped in"],
+    "saw": ["spotted", "caught sight of", "noticed", "picked up on"],
+    "looked": ["checked out", "took a gander", "eyed", "glanced at"],
+    "used": ["leaned on", "went with", "relied on", "turned to"],
+    "tried": ["took a crack at", "gave it a shot", "attempted", "went for"],
+    "wanted": ["was after", "had their eye on", "was looking to", "needed"],
+    "needed": ["had to have", "couldn't do without", "required", "was looking for"],
+    "liked": ["was into", "took to", "got behind", "warmed up to"],
+    "remembered": ["kept in mind", "didn't forget", "held onto", "recalled"],
+    "understood": ["got the picture", "wrapped their head around", "caught onto", "figured out"],
+    "believed": ["was convinced", "had it in their head", "operated on the idea", "took it as given"],
+  },
+  openers: [
+    "Here's the thing —",
+    "And honestly,",
+    "Look,",
+    "The reality is,",
+    "When you really think about it,",
+    "What's wild is that",
+    "If we're being real,",
+    "The truth is,",
+    "Here's where it gets interesting —",
+    "For what it's worth,",
+    "At the end of the day,",
+    "Let's be honest —",
+    "Here's the kicker —",
+    "Step back and look at it —",
+    "The bottom line is,",
+    "What it comes down to is",
+    "If you think about it,",
+    "The funny part is,",
+    "Here's what people miss —",
+    "If you really get into it,",
+  ],
+  interruptions: [
+    "— and this matters —",
+    ", which is key,",
+    " (and honestly, it should be)",
+    "— for better or worse —",
+    ", at the end of the day,",
+    " (which is easier said than done)",
+    "— and that's the whole point —",
+    ", if you really think about it,",
+    " (for lack of a better word)",
+    "— and here's why —",
+    ", which is saying something,",
+    " (and that's not nothing)",
+    "— if that makes sense —",
+    ", when you get right down to it,",
+  ],
+  rhetoricalQuestions: [
+    "But what does that actually mean?",
+    "So why does this matter?",
+    "But here's the real question —",
+    "What's the catch?",
+    "But is that actually true?",
+    "So what's really going on here?",
+    "But wait — is it that simple?",
+    "And what happens next?",
+    "But does that hold up?",
+    "So where does that leave us?",
+  ],
+  asides: [
+    "I mean, think about it.",
+    "Honestly, it's not that deep.",
+    "At least, that's how I see it.",
+    "Which is kind of wild, when you stop and think about it.",
+    "And that's not nothing.",
+    "I think we can all agree on that.",
+    "And that's the point, isn't it?",
+    "At least in my experience.",
+    "Which is easier said than done.",
+    "And honestly? That's fine.",
   ],
   contractions: {
     "do not": "don't", "does not": "doesn't", "did not": "didn't",
@@ -103,12 +184,34 @@ const Humanizer = {
     "it has": "it's", "she is": "she's", "he is": "he's",
     "she has": "she's", "he has": "he's", "that has": "that's",
     "there has": "there's", "what has": "what's", "who has": "who's",
+    "should have": "should've", "would have": "would've",
+    "could have": "could've", "must have": "must've",
+    "might have": "might've", "it will": "it'll",
+    "that will": "that'll", "there will": "there'll",
   },
-  fillers: ["I mean,", "you know,", "well,", "right,", "look,", "honestly,"],
-  hedging: ["probably", "likely", "in most cases", "for the most part", "generally"],
-  _seed: null,
-  _state: null,
-  srand(seed) { this._seed = seed; this._state = seed; },
+  typos: {
+    "the": "teh", "and": "adn", "that": "tht", "with": "wit",
+    "really": "realy", "definitely": "definately", "separately": "seperately",
+    "occurred": "occured", "until": "untill", "successful": "succesful",
+    "believe": "beleive", "achieve": "acheive", "receive": "recieve",
+    "piece": "peice", "their": "thier", "friend": "freind",
+    "because": "becuase", "different": "differnt", "every": "evry",
+    "first": "frist", "government": "goverment", "happened": "happend",
+    "people": "peopel",
+  },
+  naturalTransitions: {
+    "first": "to start things off", "firstly": "to kick things off",
+    "secondly": "on top of that", "thirdly": "and then there's",
+    "finally": "last but not least", "lastly": "to wrap it up",
+    "in addition": "plus", "as a result": "because of that",
+    "on the other hand": "but then again", "in contrast": "but look at it differently",
+    "similarly": "in the same vein", "likewise": "same goes for",
+    "accordingly": "so based on that", "specifically": "to be exact",
+    "particularly": "especially", "generally": "for the most part",
+    "usually": "most of the time", "typically": "normally",
+  },
+  _seed: null, _state: null,
+  srand(seed) { this._seed = seed; this._state = seed || 1; },
   rand() {
     if (this._state === null) return Math.random();
     this._state ^= this._state << 13;
@@ -120,37 +223,61 @@ const Humanizer = {
   chance(p) { return this.rand() < p; },
   humanize(text) {
     if (!text || !text.trim()) return "";
-    let sentences = this.splitSentences(text);
+    let cleaned = this.removeAITells(text);
+    cleaned = this.replaceTransitions(cleaned);
+    cleaned = this.applyContractions(cleaned);
+    let sentences = this.splitSentences(cleaned);
     let result = [];
+    let sentenceCount = 0;
     for (let i = 0; i < sentences.length; i++) {
       let s = sentences[i].trim();
       if (!s) continue;
-      s = this.applyContractions(s);
-      s = this.swapSynonyms(s);
-      if (this.chance(0.35) && this.isValidOpener(s)) { s = this.addStarter(s); }
-      if (this.chance(0.10) && s.split(" ").length > 6) { s = this.injectFiller(s); }
-      if (this.chance(0.12)) { s = this.addHedge(s); }
-      if (s.split(" ").length <= 4 && i < sentences.length - 1) {
+      s = this.applyHumanSwaps(s);
+      let wordCount = s.split(/\s+/).length;
+      if (sentenceCount > 0 && sentenceCount % this.pick([4, 5, 6]) === 0 && wordCount > 8) {
+        s = this.shortenSentence(s);
+      } else if (this.chance(0.25) && wordCount > 10) {
+        s = this.addInterruption(s);
+      }
+      if (this.chance(0.30) && this.isValidOpener(s)) { s = this.addOpener(s); }
+      if (this.chance(0.15)) { s = s.replace(/[.!?]+$/, "") + ". " + this.pick(this.asides); }
+      if (this.chance(0.02)) { s = this.injectTypo(s); }
+      if (sentenceCount > 0 && sentenceCount % this.pick([7, 8, 9, 10]) === 0) {
+        result.push(s);
+        result.push(this.pick(this.rhetoricalQuestions));
+        sentenceCount += 2;
+        continue;
+      }
+      if (this.chance(0.20) && s.includes(",")) { s = this.varyPunctuation(s); }
+      if (wordCount <= 5 && i < sentences.length - 1) {
         let next = sentences[i + 1] ? sentences[i + 1].trim() : "";
-        if (next) {
-          s = s.replace(/[.!?]+$/, "") + ", and " + next.charAt(0).toLowerCase() + next.slice(1);
+        if (next && next.split(/\s+/).length <= 12) {
+          s = s.replace(/[.!?]+$/, "") + " — and " + next.charAt(0).toLowerCase() + next.slice(1);
           i++;
         }
       }
-      if (s.split(" ").length > 28 && s.includes(",")) {
-        let parts = this.splitLongSentence(s);
-        result.push(...parts);
-        continue;
-      }
       result.push(s);
+      sentenceCount++;
     }
-    let joined = result.join(" ");
-    joined = this.cleanup(joined);
-    return joined;
+    let output = result.join(" ");
+    output = this.restructureParagraphs(output);
+    output = this.cleanup(output);
+    return output;
   },
-  splitSentences(text) {
-    let parts = text.match(/[^.!?]+[.!?]+|\S[^.!?]*$/g);
-    return parts ? parts.map(s => s.trim()).filter(s => s) : [text];
+  removeAITells(text) {
+    let lower = text;
+    for (let [aiWord, humanAlt] of Object.entries(this.aiTellWords)) {
+      let regex = new RegExp("\\b" + aiWord.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "\\b", "gi");
+      lower = lower.replace(regex, humanAlt);
+    }
+    return lower;
+  },
+  replaceTransitions(text) {
+    for (let [formal, natural] of Object.entries(this.naturalTransitions)) {
+      let regex = new RegExp("\\b" + formal.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + "\\b", "gi");
+      text = text.replace(regex, natural);
+    }
+    return text;
   },
   applyContractions(s) {
     for (let [full, contracted] of Object.entries(this.contractions)) {
@@ -159,12 +286,12 @@ const Humanizer = {
     }
     return s;
   },
-  swapSynonyms(s) {
+  applyHumanSwaps(s) {
     let words = s.split(/(\s+)/);
     for (let i = 0; i < words.length; i++) {
       let clean = words[i].toLowerCase().replace(/[^a-z']/g, "");
-      if (this.synonymMap[clean] && this.chance(0.7)) {
-        let replacement = this.pick(this.synonymMap[clean]);
+      if (this.humanSwaps[clean] && this.chance(0.55)) {
+        let replacement = this.pick(this.humanSwaps[clean]);
         if (words[i][0] === words[i][0].toUpperCase()) {
           replacement = replacement.charAt(0).toUpperCase() + replacement.slice(1);
         }
@@ -174,56 +301,103 @@ const Humanizer = {
     }
     return words.join("");
   },
-  isValidOpener(s) {
-    let first = s.split(" ")[0].toLowerCase();
-    return !["look", "here's", "honestly", "the", "and", "but", "so", "well", "i", "you", "if"].includes(first.replace(/[^a-z']/g, ""));
+  shortenSentence(s) {
+    let clauses = s.split(/[,;—]/);
+    let core = clauses[0].trim();
+    if (!/[.!?]$/.test(core)) core += ".";
+    return core;
   },
-  addStarter(s) {
-    let starter = this.pick(this.starters);
-    let rest = s.charAt(0).toLowerCase() + s.slice(1);
-    return starter + " " + rest;
-  },
-  injectFiller(s) {
+  addInterruption(s) {
+    let interruption = this.pick(this.interruptions);
     let words = s.split(" ");
-    if (words.length < 5) return s;
-    let pos = 3 + Math.floor(this.rand() * 3);
-    if (pos >= words.length) pos = Math.floor(words.length / 2);
-    let filler = this.pick(this.fillers);
-    words.splice(pos, 0, filler);
+    if (words.length < 8) return s;
+    let pos = 4 + Math.floor(this.rand() * 5);
+    if (pos >= words.length - 2) pos = Math.floor(words.length / 2);
+    let insertAt = pos;
+    for (let i = pos; i < Math.min(pos + 5, words.length); i++) {
+      if (words[i] && words[i].includes(",")) { insertAt = i + 1; break; }
+    }
+    words.splice(insertAt, 0, interruption);
     return words.join(" ");
   },
-  addHedge(s) {
-    let hedge = this.pick(this.hedging);
-    let words = s.split(" ");
-    let modals = ["is", "are", "was", "were", "will", "would", "could", "should", "can", "has", "have", "had", "does", "do", "did"];
+  addOpener(s) {
+    let opener = this.pick(this.openers);
+    let rest = s.charAt(0).toLowerCase() + s.slice(1);
+    return opener + " " + rest;
+  },
+  isValidOpener(s) {
+    let first = s.split(" ")[0].toLowerCase().replace(/[^a-z']/g, "");
+    let blocked = ["here's", "look", "and", "but", "so", "well", "i", "you", "if", "the", "when", "what", "let's", "step", "at", "for"];
+    return !blocked.includes(first);
+  },
+  injectTypo(s) {
+    let words = s.split(/(\s+)/);
+    let candidates = [];
     for (let i = 0; i < words.length; i++) {
-      if (modals.includes(words[i].toLowerCase().replace(/[^a-z]/g, ""))) {
-        words.splice(i + 1, 0, hedge);
-        return words.join(" ");
+      let clean = words[i].toLowerCase().replace(/[^a-z]/g, "");
+      if (this.typos[clean]) candidates.push(i);
+    }
+    if (candidates.length === 0) return s;
+    let targetIdx = this.pick(candidates);
+    let word = words[targetIdx];
+    let clean = word.toLowerCase().replace(/[^a-z]/g, "");
+    let typo = this.typos[clean];
+    if (word[0] === word[0].toUpperCase()) { typo = typo.charAt(0).toUpperCase() + typo.slice(1); }
+    let trailing = word.match(/[^a-zA-Z]+$/);
+    words[targetIdx] = typo + (trailing ? trailing[0] : "");
+    return words.join("");
+  },
+  varyPunctuation(s) {
+    let commaIdx = s.indexOf(",");
+    if (commaIdx === -1) return s;
+    if (this.chance(0.5)) {
+      s = s.substring(0, commaIdx) + " —" + s.substring(commaIdx + 1);
+    } else if (this.chance(0.3)) {
+      let after = s.substring(commaIdx + 1).trim();
+      if (after.length > 3 && /^[A-Z]/.test(after)) {
+        s = s.substring(0, commaIdx) + ";" + s.substring(commaIdx + 1);
       }
     }
     return s;
   },
-  splitLongSentence(s) {
-    let commaIdxs = [];
-    for (let i = 0; i < s.length; i++) { if (s[i] === ",") commaIdxs.push(i); }
-    if (commaIdxs.length === 0) return [s];
-    let mid = s.length / 2;
-    let best = commaIdxs.reduce((a, b) => Math.abs(b - mid) < Math.abs(a - mid) ? b : a);
-    let first = s.substring(0, best).trim();
-    let second = s.substring(best + 1).trim();
-    if (!/[.!?]$/.test(first)) first += ".";
-    if (!/[.!?]$/.test(second)) second += ".";
-    second = second.charAt(0).toUpperCase() + second.slice(1);
-    return [first, second];
+  restructureParagraphs(text) {
+    let sentences = this.splitSentences(text);
+    if (sentences.length < 4) return text;
+    let paragraphs = [];
+    let current = [];
+    let targetLength = this.pick([3, 4, 4, 5, 5, 6]);
+    for (let i = 0; i < sentences.length; i++) {
+      current.push(sentences[i].trim());
+      if (current.length >= targetLength) {
+        paragraphs.push(current.join(" "));
+        current = [];
+        targetLength = this.pick([3, 4, 4, 5, 5, 6, 7]);
+      }
+    }
+    if (current.length > 0) paragraphs.push(current.join(" "));
+    return paragraphs.join("\n\n");
+  },
+  splitSentences(text) {
+    let parts = text.match(/[^.!?]+[.!?]+|\S[^.!?]*$/g);
+    return parts ? parts.map(s => s.trim()).filter(s => s) : [text];
   },
   cleanup(s) {
     s = s.replace(/\s{2,}/g, " ");
     s = s.replace(/\s+([,.!?;:])/g, "$1");
-    s = s.replace(/([,.!?;:])([A-Za-z])/g, "$1 $2");
+    s = s.replace(/([,.!?;:])([A-Za-z])/g, (match, p1, p2) => {
+      if (p1 === "." && /^\d/.test(p2)) return match;
+      return p1 + " " + p2;
+    });
     s = s.charAt(0).toUpperCase() + s.slice(1);
     s = s.replace(/\b(\w+)\s+\1\b/gi, "$1");
-    if (!/[.!?]$/.test(s.trim())) s = s.trim() + ".";
+    s = s.replace(/[.]{2,}/g, ".");
+    s = s.replace(/[!]{2,}/g, "!");
+    s = s.replace(/[?]{2,}/g, "?");
+    s = s.replace(/—\s+—/g, "—");
+    s = s.replace(/,\s*,/g, ",");
+    s = s.split("\n").map(l => l.trim()).join("\n");
+    let lastChar = s.trim().slice(-1);
+    if (!/[.!?]/.test(lastChar)) s = s.trim() + ".";
     return s.trim();
   },
   analyze(text) {
@@ -256,7 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
   humanizeBtn.addEventListener("click", () => {
     let input = inputEl.value.trim();
     if (!input) return;
-    Humanizer.srand(input.length * 7919);
+    Humanizer.srand(Date.now() % 2147483647);
     let humanized = Humanizer.humanize(input);
     outputEl.value = humanized;
     let stats = Humanizer.analyze(humanized);
@@ -284,3 +458,4 @@ document.addEventListener("DOMContentLoaded", () => {
     inputEl.value = ""; outputEl.value = ""; statsBar.hidden = true; copyBtn.disabled = true; inputEl.focus();
   });
 });
+
