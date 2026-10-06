@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI text humanizer — bypass AI detection with natural language variation." />
-    <title>AI Humanizer</title>
+    <meta name="description" content="AI text humanizer with built-in detector testing and auto-optimization." />
+    <title>AI Humanizer Pro</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
   </head>
   <body>
     <div class="page-shell">
       <header class="site-header">
-        <h1>AI Humanizer</h1>
-        <p class="subtitle">Paste AI-generated text. Get human-rewritten output.</p>
+        <h1>AI Humanizer Pro</h1>
+        <p class="subtitle">Humanize text. Test against 8 AI detectors. Auto-optimize until clean.</p>
       </header>
       <main>
         <section class="editor-area">
@@ -22,6 +22,8 @@
           </div>
           <div class="controls">
             <button id="humanize-btn" class="button button-primary" type="button">Humanize</button>
+            <button id="test-btn" class="button button-secondary" type="button" disabled>Test All Detectors</button>
+            <button id="auto-btn" class="button button-accent" type="button" disabled>Auto-Optimize</button>
             <button id="copy-btn" class="button" type="button" disabled>Copy Result</button>
             <button id="clear-btn" class="button button-ghost" type="button">Clear</button>
           </div>
@@ -31,25 +33,21 @@
           </div>
         </section>
         <section class="stats-bar" id="stats-bar" hidden>
-          <div class="stat">
-            <span class="stat-label">Words</span>
-            <span class="stat-value" id="word-count">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Sentences</span>
-            <span class="stat-value" id="sentence-count">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Avg Sentence Length</span>
-            <span class="stat-value" id="avg-length">0</span>
-          </div>
-          <div class="stat">
-            <span class="stat-label">Burstiness</span>
-            <span class="stat-value" id="burstiness">Low</span>
-          </div>
+          <div class="stat"><span class="stat-label">Words</span><span class="stat-value" id="word-count">0</span></div>
+          <div class="stat"><span class="stat-label">Sentences</span><span class="stat-value" id="sentence-count">0</span></div>
+          <div class="stat"><span class="stat-label">Avg Length</span><span class="stat-value" id="avg-length">0</span></div>
+          <div class="stat"><span class="stat-label">Burstiness</span><span class="stat-value" id="burstiness">Low</span></div>
+        </section>
+        <section class="optimize-status" id="optimize-status" hidden>
+          <div class="optimize-progress" id="optimize-progress"></div>
+        </section>
+        <section class="detector-results" id="detector-results" hidden>
+          <h2>Detector Results</h2>
+          <div class="overall-score" id="overall-score"></div>
+          <div class="detector-grid" id="detector-grid"></div>
+          <p class="detector-disclaimer">Local simulations approximating each detector's known scoring methodology. Real-world results may vary slightly.</p>
         </section>
       </main>
     </div>
   </body>
 </html>
-
